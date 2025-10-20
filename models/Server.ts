@@ -2,6 +2,7 @@ import express, {Express} from "express";
 import { dbinitializer } from "../database/dbconfig";
 import usuariosRoutes from "../routes/userRoutes"
 import coleccionRoutes from "../routes/coleccionRoutes"
+import cors from 'cors';
 
 export class Server{
 
@@ -19,7 +20,8 @@ export class Server{
     }
 
     middlewares():void{
-        this.app.use(express.json())
+        this.app.use(express.json());
+        this.app.use(cors());
     }
 
     routes():void{
