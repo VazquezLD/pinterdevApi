@@ -1,6 +1,6 @@
 import { Schema, model, Document, Types } from 'mongoose';
 import bcrypt from 'bcryptjs';
-
+import Coleccion from "../models/coleccion";
 
 export interface IUsuario extends Document {
     nombre: string;
@@ -52,6 +52,12 @@ usuarioSchema.pre<IUsuario>('save', async function (next) {
     } catch (error) {
         next(error as Error);
     }
+});
+
+usuarioSchema.pre("findOneAndDelete", async function (next) {
+    const usuarioId = this.getFilter()._id;
+    await Coleccion.deleteMany({ usuario: usuarioId });
+    next();
 });
 
 usuarioSchema.methods.compararContrasena = async function (contrasena: string): Promise<boolean> {

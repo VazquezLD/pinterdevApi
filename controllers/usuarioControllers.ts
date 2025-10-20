@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import Usuario, { IUsuario } from "../models/usuario";
+import { RequestConUsuario } from "../middlewares/autenticarMiddleware";
+import { validarId } from "../helpers/validarId";
 
 export const crearUsuario = async (req: Request, res: Response) => {
 
@@ -35,18 +37,24 @@ export const crearUsuario = async (req: Request, res: Response) => {
 
 }
 
-export const eliminarUsuario = async (req: Request, res: Response) => {
+export const eliminarUsuario = async (req: RequestConUsuario, res: Response) => {
     try {
+        const usuarioId = req.userId;
         const { id } = req.params;
-        if (!id) {
-            return res.status(400).json({ msg: "El ID del usuario es obligatorio." });
-        }
+        if (!validarId(id, res)) return;
 
-        const usuarioEliminado = await Usuario.findByIdAndDelete(id);
-        if (!usuarioEliminado) {
+        const usuarioAEliminar = await Usuario.findByIdAndDelete(id);
+
+        if (!usuarioAEliminar) {
             return res.status(404).json({ msg: "Usuario no encontrado." });
         }
-        const { contrasena, ...usuarioSinContrasena } = usuarioEliminado.toObject();
+        if(usuarioAEliminar.id !== usuarioId){
+            return res.status(403).json({ msg: "No tenés permiso para eliminar usuarios." });
+        }
+
+        await Usuario.findByIdAndDelete(id);
+
+        const { contrasena, ...usuarioSinContrasena } = usuarioAEliminar.toObject();
         res.status(200).json({
             msg: "Usuario eliminado correctamente.",
             usuario: usuarioSinContrasena
