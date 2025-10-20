@@ -22,10 +22,6 @@ export class Server{
         this.app.use(express.json())
     }
 
-    listen():void{
-        this.app.listen(process.env.PORT);
-        console.log("Corriendo app")
-    }
     routes():void{
         this.app.use("/api/usuarios", usuariosRoutes)
         this.app.use("/api/colecciones", coleccionRoutes)
