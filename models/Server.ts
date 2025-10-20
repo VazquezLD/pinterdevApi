@@ -21,7 +21,16 @@ export class Server{
 
     middlewares():void{
         this.app.use(express.json());
-        this.app.use(cors());
+        this.app.use(cors({
+            origin: [
+                "http://localhost:5173",
+                "https://tu-frontend.vercel.app"
+            ],
+            methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+            allowedHeaders: ["Content-Type", "Authorization"],
+            credentials: true
+            }));
+        this.app.options('*', cors());
     }
 
     routes():void{
