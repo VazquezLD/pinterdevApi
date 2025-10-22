@@ -24,13 +24,12 @@ export class Server{
         this.app.use(cors({
             origin: [
                 "http://localhost:5173",
-                "https://tu-frontend.vercel.app"
+                "https://pinterdev-api.vercel.app"
             ],
             methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
             allowedHeaders: ["Content-Type", "Authorization"],
             credentials: true
             }));
-        this.app.options('*', cors());
     }
 
     routes():void{
