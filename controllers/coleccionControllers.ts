@@ -75,11 +75,9 @@ export const eliminarColeccion = async (req: RequestConUsuario, res: Response) =
 
 export const obtenerColeccionesPorUsuario = async (req: RequestConUsuario, res: Response) => {
     try {
-        const { id } = req.params;
         const usuarioId = req.userId;
-        if (!validarId(id, res)) return;
         
-        const usuarioExistente = await Usuario.findById(id);
+        const usuarioExistente = await Usuario.findById(usuarioId);
         if(!usuarioExistente){
             return res.status(404).json({ msg: "Usuario no encontrado." });
         }
@@ -87,7 +85,7 @@ export const obtenerColeccionesPorUsuario = async (req: RequestConUsuario, res: 
                 return res.status(403).json({ msg: "No tenés permiso para modificar colecciones." });
         }
 
-        const colecciones = await Coleccion.find({usuario: id})
+        const colecciones = await Coleccion.find({usuario: usuarioId})
         res.status(200).json({ colecciones });
 
     } catch (error) {
