@@ -26,7 +26,7 @@ export class Server{
                 "http://localhost:5173",
                 "https://pinterdev-api.vercel.app"
             ],
-            methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+            methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
             allowedHeaders: ["Content-Type", "Authorization"],
             credentials: true
             }));
