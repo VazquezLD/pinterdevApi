@@ -24,7 +24,7 @@ export class Server{
         this.app.use(cors({
             origin: [
                 "http://localhost:5173",
-                "https://pinterdev-api.vercel.app"
+                "https://pinterdev.vercel.app",
             ],
             methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
             allowedHeaders: ["Content-Type", "Authorization"],
