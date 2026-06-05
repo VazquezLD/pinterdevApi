@@ -20,7 +20,7 @@ export class Server{
     }
 
     middlewares():void{
-        this.app.use(express.json());
+        
         this.app.use(cors({
             origin: [
                 "http://localhost:5173",
@@ -30,6 +30,7 @@ export class Server{
             allowedHeaders: ["Content-Type", "Authorization"],
             credentials: true
             }));
+        this.app.use(express.json());
     }
 
     routes():void{
